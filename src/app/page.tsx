@@ -3,27 +3,18 @@ import Courses from "@/components/Courses";
 import Faq from "@/components/Faq";
 import Header from "@/components/Header";
 import HeroText from "@/components/HeroText";
-import List from "@/components/List";
 import Marquee from "@/components/Marquee";
 import MarqueeScroll from "@/components/MarqueeScroll";
 import Wave from "@/components/Wave";
 
 export default function Home() {
   return (
-    <div style={{ background: "#000" }}>
+    <>
       <Header />
-      <section
-        id="section-1"
-        className="page-section"
-        style={{ height: "50vh" }}
-      >
+      <section id="section-1" className="page-section">
         <HeroText />
       </section>
-      <section
-        id="section-2"
-        className="page-section"
-        style={{ height: "100vh" }}
-      >
+      <section id="section-2" className="page-section">
         <Marquee text="CURSOS E IMERSÕES. UMA NOVA CULTURA DE MERCADO." />
         <Marquee text="TECNOLOGIA, INOVAÇÃO E NEGÓCIOS. PRESENTE E FUTURO." />
         <div className="desktopOnly">
@@ -49,34 +40,15 @@ export default function Home() {
           </div>
         </div>
       </section>
-      <section
-        id="section-3"
-        className="page-section"
-        style={{ height: "100vh" }}
-      >
+      <section id="section-3" className="page-section">
         <Wave />
       </section>
-      <section
-        id="section-4"
-        className="page-section"
-        style={{ height: "100vh" }}
-      >
+      <section id="section-4" className="page-section">
         <Courses />
       </section>
-      <section
-        id="section-5"
-        className="page-section"
-        style={{ height: "100vh" }}
-      >
+      <section id="section-5" className="page-section">
         <Faq />
       </section>
-      <section
-        id="section-6"
-        className="page-section"
-        style={{ height: "100vh" }}
-      >
-        <List />
-      </section>
-    </div>
+    </>
   );
 }

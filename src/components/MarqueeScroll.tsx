@@ -24,15 +24,11 @@ export default function MarqueeScroll({
     const el = marqueeRef.current;
     if (!el) return;
 
-    const totalWidth = el.scrollWidth / 2;
-
-    gsap.set(el, { x: 0 });
-
-    gsap.to(el, {
-      x: direction === "left" ? -totalWidth : totalWidth,
+    const anim = gsap.to(el, {
+      xPercent: direction === "left" ? -50 : 50,
       ease: "none",
       scrollTrigger: {
-        trigger: el,
+        trigger: el.parentElement,
         start: "top bottom",
         end: "bottom top",
         scrub: true,
@@ -40,9 +36,8 @@ export default function MarqueeScroll({
     });
 
     return () => {
-      ScrollTrigger.getAll().forEach((st) => {
-        st.kill();
-      });
+      anim.scrollTrigger?.kill();
+      anim.kill();
     };
   }, [direction]);
 

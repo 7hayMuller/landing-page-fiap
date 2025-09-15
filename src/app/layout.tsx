@@ -1,14 +1,14 @@
 import "./globals.css";
-import { Merriweather, Roboto } from "next/font/google";
+import { Montserrat, Roboto } from "next/font/google";
 
 const roboto = Roboto({
   subsets: ["latin"],
   variable: "--font-roboto",
 });
 
-const merriweather = Merriweather({
+const montserrat = Montserrat({
   subsets: ["latin"],
-  variable: "--font-merriweather",
+  variable: "--font-Montserrat",
 });
 
 export default function RootLayout({
@@ -18,7 +18,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="pt-BR">
-      <body className={`${merriweather.variable} ${roboto.variable}`}>
+      <body className={`${montserrat.variable} ${roboto.variable}`}>
         {children}
       </body>
     </html>

@@ -12,28 +12,30 @@ export default function HeroText() {
       `.${styles.line1}`,
       { y: "2rem", opacity: 0 },
       { y: "0rem", opacity: 1, duration: 1 }
-    )
-      .fromTo(
-        `.${styles.line2}`,
-        { y: "2rem", opacity: 0 },
-        { y: "0rem", opacity: 1, duration: 1 },
-        "-=0.3"
-      )
-      .fromTo(
-        `.${styles.back}`,
-        { y: "2rem", opacity: 0 },
-        { y: "0rem", opacity: 1, duration: 1 },
-        "-=0.2"
-      );
+    );
+
+    tl.fromTo(
+      `.${styles.line2}`,
+      { y: "2rem", opacity: 0 },
+      { y: "0rem", opacity: 1, duration: 1 }
+    );
+
+    tl.fromTo(
+      `.${styles.backText}`,
+      { y: "2rem", opacity: 0 },
+      { y: "0rem", opacity: 1, duration: 1 }
+    );
   }, []);
 
   return (
     <div className={styles.container}>
-      <div className={styles.front}>
-        <h2 className={styles.line1}>A Melhor Faculdade</h2>
-        <h2 className={styles.line2}>de Tecnologia</h2>
+      <div className={styles.back}>
+        <span className={styles.backText}>SOBRE</span>
+        <div className={styles.front}>
+          <h2 className={styles.line1}>A Melhor Faculdade</h2>
+          <h2 className={styles.line2}>de Tecnologia</h2>
+        </div>
       </div>
-      <h2 className={styles.back}>SOBRE</h2>
     </div>
   );
 }

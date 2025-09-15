@@ -19,6 +19,16 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 2rem;
+
+  /* Tablet */
+  @media (max-width: 1024px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* Mobile */
+  @media (max-width: 767px) {
+    grid-template-columns: 1fr;
+  }
 }
 
 .card {
@@ -28,11 +38,10 @@
   text-align: left;
   cursor: pointer;
   color: #ccc;
-  min-height: 200px;
   padding: 1.5rem;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  align-items: flex-start;
 }
 
 .bar {
@@ -40,6 +49,7 @@
   width: 40px;
   background: #666;
   margin-bottom: 1rem;
+  transition: all 0.3s ease;
 }
 
 .question {
@@ -51,8 +61,10 @@
 
 .answer {
   opacity: 0;
-  margin-top: 0.3rem;
-  padding-top: 1rem;
+  height: 0;
+  overflow: hidden;
+  margin-top: 0.5rem;
+  padding-top: 0.5rem;
 
   p {
     font-size: 1.1rem;

@@ -31,7 +31,7 @@ const FAQS: FAQ[] = [
   {
     question: "QUAIS OS PRÉ-REQUISITOS?",
     answer:
-      "Os pré-requisitos variam conforme o curso, mas não exigem formação prévia.",
+      "Conteúdos em vídeos, podcasts, PDFs e quizzes que garantem uma jornada de aprendizado leve e engajadora.",
   },
   {
     question: "VOU RECEBER CERTIFICADO DE CONCLUSÃO DE CURSO?",
@@ -39,41 +39,47 @@ const FAQS: FAQ[] = [
   },
 ];
 
+/** Hook simples para detectar mobile por largura */
+function useIsMobile(max = 767) {
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia(`(max-width:${max}px)`);
+    const update = () => setIsMobile(mq.matches);
+    update();
+    mq.addEventListener("change", update);
+    return () => mq.removeEventListener("change", update);
+  }, [max]);
+  return isMobile;
+}
+
 export default function FaqSection() {
   const [active, setActive] = useState<number | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
+  const isMobile = useIsMobile(767);
 
   useEffect(() => {
     if (!containerRef.current) return;
 
     const ctx = gsap.context(() => {
       FAQS.forEach((_, i) => {
-        const answerEl = `.answer-${i}`;
-        const barEl = `.bar-${i}`;
+        const answerSel = `.answer-${i}`;
+        const barSel = `.bar-${i}`;
 
-        if (active === i) {
-          gsap.to(answerEl, {
-            opacity: 1,
-            duration: 0.5,
-            ease: "power2.out",
-          });
-          gsap.to(barEl, {
-            width: "100%",
-            backgroundColor: "#e91e63",
-            duration: 0.4,
-          });
-        } else {
-          gsap.to(answerEl, {
-            opacity: 0,
-            duration: 0.4,
-            ease: "power2.in",
-          });
-          gsap.to(barEl, {
-            width: "40px",
-            backgroundColor: "#666",
-            duration: 0.4,
-          });
-        }
+        const opened = active === i;
+
+        gsap.to(answerSel, {
+          opacity: opened ? 1 : 0,
+          height: opened ? "auto" : 0,
+          duration: opened ? 0.5 : 0.35,
+          ease: opened ? "power2.out" : "power2.in",
+        });
+
+        gsap.to(barSel, {
+          width: opened ? "100%" : "40px",
+          backgroundColor: opened ? "#e91e63" : "#666",
+          duration: 0.35,
+          ease: "power2.out",
+        });
       });
     }, containerRef);
 
@@ -91,8 +97,13 @@ export default function FaqSection() {
             key={faq.question}
             type="button"
             className={`${styles.card} ${active === i ? styles.active : ""}`}
-            onMouseEnter={() => setActive(i)}
-            onClick={() => setActive(i)}
+            // Desktop/Tablet → hover abre e leave fecha
+            onMouseEnter={!isMobile ? () => setActive(i) : undefined}
+            onMouseLeave={!isMobile ? () => setActive(null) : undefined}
+            // Mobile → clique para alternar
+            onClick={
+              isMobile ? () => setActive(active === i ? null : i) : undefined
+            }
           >
             <div className={`${styles.bar} bar-${i}`} />
             <h3 className={styles.question}>{faq.question}</h3>

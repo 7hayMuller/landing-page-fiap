@@ -33,11 +33,12 @@
 }
 
 .outlineText {
+  font-family: Arial, Helvetica, sans-serif;
+  -webkit-text-stroke: 1px #545555;
   color: transparent;
-  -webkit-text-stroke: 0.5px #545555;
   font-weight: 700;
-  letter-spacing: 0.02em;
-  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 .italic {
