@@ -1,0 +1,23 @@
+.wrapper {
+  overflow: hidden;
+  white-space: nowrap;
+  width: 100%;
+  color: #fff;
+  font-size: 5rem;
+  border-bottom: 2px solid #fff;
+}
+
+.track {
+  display: inline-flex;
+  margin-top: 20px;
+  will-change: transform;
+}
+
+.chunk {
+  flex: 0 0 auto;
+  padding-right: 2rem;
+}
+
+.item {
+  margin-right: 1rem;
+}

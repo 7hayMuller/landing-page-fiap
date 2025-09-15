@@ -1,0 +1,62 @@
+.faqSection {
+  background: #000;
+  color: #fff;
+  padding: 4rem;
+}
+
+.title {
+  font-size: 3rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.subtitle {
+  color: #e91e63;
+  margin-bottom: 3rem;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+
+.card {
+  background: none;
+  border: none;
+  outline: none;
+  text-align: left;
+  cursor: pointer;
+  color: #ccc;
+  min-height: 200px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.bar {
+  height: 3px;
+  width: 40px;
+  background: #666;
+  margin-bottom: 1rem;
+}
+
+.question {
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: #fff;
+}
+
+.answer {
+  opacity: 0;
+  margin-top: 0.3rem;
+  padding-top: 1rem;
+
+  p {
+    font-size: 1.1rem;
+    color: #aaa;
+    line-height: 1.5;
+  }
+}
