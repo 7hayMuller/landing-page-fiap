@@ -11,12 +11,18 @@ export default function Home() {
   return (
     <>
       <Header />
-      <section id="section-1" className="page-section">
+      <section id="section-1">
         <HeroText />
       </section>
-      <section id="section-2" className="page-section">
-        <Marquee text="CURSOS E IMERSÕES. UMA NOVA CULTURA DE MERCADO." />
-        <Marquee text="TECNOLOGIA, INOVAÇÃO E NEGÓCIOS. PRESENTE E FUTURO." />
+      <section id="section-2">
+        <Marquee
+          direction="left"
+          text="CURSOS E IMERSÕES. UMA NOVA CULTURA DE MERCADO."
+        />
+        <Marquee
+          direction="right"
+          text="TECNOLOGIA, INOVAÇÃO E NEGÓCIOS. PRESENTE E FUTURO."
+        />
         <div className="desktopOnly">
           <div style={{ display: "flex", justifyContent: "center" }}>
             <Image
@@ -30,25 +36,46 @@ export default function Home() {
           <div style={{ zIndex: 1, marginTop: "-100px" }}>
             <MarqueeScroll
               direction="left"
-              words={["CONHECIMENTO", "SKILLS"]}
+              words={[
+                "CONHECIMENTO",
+                "SKILLS",
+                "CONHECIMENTO",
+                "SKILLS",
+                "CONHECIMENTO",
+                "SKILLS",
+              ]}
             />
             <MarqueeScroll
               direction="right"
               italic
-              words="MUITO ALÉM DOS TUTORIAIS"
+              words={[
+                "MUITO ALÉM DOS TUTORIAIS",
+                "MUITO ALÉM DOS TUTORIAIS",
+                "MUITO ALÉM DOS TUTORIAIS",
+                "MUITO ALÉM DOS TUTORIAIS",
+                "MUITO ALÉM DOS TUTORIAIS",
+                "MUITO ALÉM DOS TUTORIAIS",
+              ]}
             />
           </div>
         </div>
       </section>
-      <section id="section-3" className="page-section">
-        <Wave />
-      </section>
-      <section id="section-4" className="page-section">
-        <Courses />
-      </section>
-      <section id="section-5" className="page-section">
-        <Faq />
-      </section>
+      <div className="desktopOnly">
+        <section
+          id="section-3"
+          style={{ margin: 0, padding: 0, width: "100vw" }}
+        >
+          <Wave />
+        </section>
+      </div>
+      <div className="container">
+        <section id="section-4">
+          <Courses />
+        </section>
+        <section id="section-5">
+          <Faq />
+        </section>
+      </div>
     </>
   );
 }

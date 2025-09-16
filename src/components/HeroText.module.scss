@@ -2,20 +2,24 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 30rem;
+  height: auto;
+  padding: 4rem 0;
+  margin-top: 5rem;
+  margin-bottom: 6px;
+  position: relative;
 }
 
 .back {
-  position: relative;
-  font-size: 22rem; /* desktop padrão */
+  font-size: clamp(100px, 20vw, 350px);
   font-weight: 900;
   color: #141313;
+  line-height: 1;
+  position: relative;
   z-index: 1;
   pointer-events: none;
   user-select: none;
   white-space: nowrap;
   display: inline-block;
-  line-height: 1;
 }
 
 .backText {
@@ -23,12 +27,11 @@
 }
 
 .front {
-  font-family: "Montserrat", sans-serif;
   position: absolute;
-  top: 20px;
-  left: 20px;
-  right: 12px;
-  bottom: 50px;
+  top: clamp(10px, 2vw, 50px);
+  left: clamp(10px, 2vw, 50px);
+  right: clamp(10px, 2vw, 50px);
+  bottom: clamp(20px, 3vw, 80px);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -37,7 +40,7 @@
 
 .line1,
 .line2 {
-  font-size: 7.5rem; /* desktop padrão */
+  font-size: clamp(30px, 6vw, 120px);
   font-weight: 400;
   color: #fff;
   margin: 0;
@@ -51,33 +54,25 @@
   text-align: left;
 }
 
-/* Tablet */
-@media (max-width: 1023px) and (min-width: 768px) {
+@media (max-width: 360px) {
   .back {
-    font-size: 10rem; /* SOBRE */
-  }
-
-  .line1,
-  .line2 {
-    font-size: 3rem; /* linhas */
-  }
-}
-
-/* Mobile */
-@media (max-width: 767px) {
-  .back {
-    font-size: 6.25rem; /* 100px */
-  }
-
-  .line1,
-  .line2 {
-    font-size: 1.875rem; /* 30px */
+    font-size: 70px;
   }
 
   .front {
-    top: 10px;
-    left: 10px;
-    right: 10px;
-    bottom: 20px;
+    top: 5px;
+    left: 5px;
+    right: 5px;
+    bottom: auto;
+  }
+
+  .line1 {
+    font-size: 22px;
+    text-align: center;
+  }
+
+  .line2 {
+    font-size: 22px;
+    text-align: left;
   }
 }

@@ -48,7 +48,15 @@ export default function Header() {
     <header ref={headerRef} className={styles.header} id="main-header">
       <div ref={progressRef} className={styles.progressBar} />
       <nav className={styles.nav}>
-        <Image src="/svgs/logo-fiap.svg" alt="Logo" width={144} height={40} />
+        <div className={styles.logoWrapper}>
+          <Image
+            src="/svgs/logo-fiap.svg"
+            alt="Logo"
+            fill
+            sizes="(max-width: 768px) 120px, (max-width: 1200px) 160px, 200px"
+            className={styles.logo}
+          />
+        </div>
       </nav>
     </header>
   );

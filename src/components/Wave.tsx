@@ -28,14 +28,18 @@ export default function Wave() {
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    const scale = Math.max(
+    const scale = Math.min(
       canvas.width / img.width,
       canvas.height / img.height
     );
-    const x = (canvas.width - img.width * scale) / 2;
-    const y = (canvas.height - img.height * scale) / 2;
 
-    ctx.drawImage(img, x, y, img.width * scale, img.height * scale);
+    const newWidth = img.width * scale;
+    const newHeight = img.height * scale;
+
+    const x = (canvas.width - newWidth) / 2;
+    const y = (canvas.height - newHeight) / 2;
+
+    ctx.drawImage(img, x, y, newWidth, newHeight);
   }, []);
 
   useEffect(() => {
@@ -51,9 +55,8 @@ export default function Wave() {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-    context.current = canvas.getContext("2d");
+    const ctx = canvas.getContext("2d");
+    context.current = ctx;
 
     const loadedImages: HTMLImageElement[] = [];
     for (let i = 0; i < frameCount; i++) {
@@ -63,12 +66,17 @@ export default function Wave() {
     }
     images.current = loadedImages;
 
-    loadedImages[0].onload = () => render(0);
+    loadedImages[0].onload = () => {
+      const aspectRatio = loadedImages[0].height / loadedImages[0].width;
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerWidth * aspectRatio;
+
+      render(0);
+    };
 
     const mm = gsap.matchMedia();
-
-    mm.add("(min-width: 1024px)", () => {
-      const scrollDistance = frameCount * 20;
+    mm.add("(min-width: 1025px)", () => {
+      const scrollDistance = frameCount * 8;
 
       const st = ScrollTrigger.create({
         trigger: "#section-3",
@@ -89,9 +97,12 @@ export default function Wave() {
     });
 
     const handleResize = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-      render(0);
+      if (images.current[0]) {
+        const aspectRatio = images.current[0].height / images.current[0].width;
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerWidth * aspectRatio;
+        render(0);
+      }
     };
     window.addEventListener("resize", handleResize);
 
@@ -104,11 +115,13 @@ export default function Wave() {
   if (!isDesktop) return null;
 
   return (
-    <div style={{ height: "100vh", position: "relative" }}>
-      <canvas
-        ref={canvasRef}
-        style={{ display: "block", width: "100%", height: "100%" }}
-      />
-    </div>
+    <canvas
+      ref={canvasRef}
+      style={{
+        display: "block",
+        width: "100vw",
+        height: "auto",
+      }}
+    />
   );
 }

@@ -12,34 +12,35 @@ type FAQ = {
 const FAQS: FAQ[] = [
   {
     question: "QUANDO POSSO ME MATRICULAR?",
-    answer: "As matrículas estão abertas o ano todo, conforme disponibilidade.",
+    answer:
+      "Você pode se matricular em qualquer dia e hora, basta acessar a página do curso e se inscrever.",
   },
   {
     question: "QUAL A DURAÇÃO DOS CURSOS?",
-    answer:
-      "Cada curso tem carga horária específica, variando de semanas a meses.",
+    answer: "De 6 a 42 horas.",
   },
   {
     question: "POSSO FAZER DOIS OU MAIS CURSOS AO MESMO TEMPO?",
     answer:
-      "Sim. Apenas atente-se às datas, elas devem ser diferentes, porque cada curso tem sua dinâmica.",
+      "Sim. Apenas atente-se às datas, elas devem ser diferentes, porque cada curso tem sua dinâmica",
   },
   {
     question: "PRECISO LEVAR ALGUM MATERIAL PARA AS AULAS?",
-    answer: "Não. Todo o material necessário será fornecido.",
+    answer:
+      "Não. Os materiais utilizados em sala de aula são fornecidos pela FIAP e as aulas mais técnicas são realizadas em nossos próprios laboratórios. Sugerimos somente que traga o que preferir para suas anotações.",
   },
   {
     question: "QUAIS OS PRÉ-REQUISITOS?",
     answer:
-      "Conteúdos em vídeos, podcasts, PDFs e quizzes que garantem uma jornada de aprendizado leve e engajadora.",
+      "Cada curso tem seus pré-requisitos descritos na própria página. Identifique-os, para que você obtenha um melhor aproveitamento do seu SHIFT.",
   },
   {
     question: "VOU RECEBER CERTIFICADO DE CONCLUSÃO DE CURSO?",
-    answer: "Sim, todos os cursos dão direito a certificado reconhecido.",
+    answer:
+      "Sim. Ao cumprir pelo menos 75% da carga horária do curso, você receberá um Certificado Digital, que poderá ser acessado na plataforma.",
   },
 ];
 
-/** Hook simples para detectar mobile por largura */
 function useIsMobile(max = 767) {
   const [isMobile, setIsMobile] = useState(false);
   useEffect(() => {
@@ -88,8 +89,12 @@ export default function FaqSection() {
 
   return (
     <section className={styles.faqSection} ref={containerRef}>
-      <h2 className={styles.title}>FAQ</h2>
-      <p className={styles.subtitle}>Dúvidas Frequentes</p>
+      <div className={styles.headerRow}>
+        <div>
+          <h2 className={styles.title}>FAQ</h2>
+          <p className={styles.subtitle}>Dúvidas Frequentes</p>
+        </div>
+      </div>
 
       <div className={styles.grid}>
         {FAQS.map((faq, i) => (
@@ -97,16 +102,20 @@ export default function FaqSection() {
             key={faq.question}
             type="button"
             className={`${styles.card} ${active === i ? styles.active : ""}`}
-            // Desktop/Tablet → hover abre e leave fecha
             onMouseEnter={!isMobile ? () => setActive(i) : undefined}
             onMouseLeave={!isMobile ? () => setActive(null) : undefined}
-            // Mobile → clique para alternar
             onClick={
               isMobile ? () => setActive(active === i ? null : i) : undefined
             }
           >
             <div className={`${styles.bar} bar-${i}`} />
-            <h3 className={styles.question}>{faq.question}</h3>
+            <h3
+              className={`${styles.question} ${
+                active === i ? styles.questionActive : ""
+              }`}
+            >
+              {faq.question}
+            </h3>
             <div className={`${styles.answer} answer-${i}`}>
               <p>{faq.answer}</p>
             </div>

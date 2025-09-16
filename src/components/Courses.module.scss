@@ -1,40 +1,50 @@
 .coursesSection {
   background: #000;
   color: #fff;
-  padding: 4rem;
+  padding: clamp(1rem, 4vw, 6rem);
 
   .headerRow {
     display: flex;
     justify-content: space-between;
-    align-items: flex-end;
-    gap: 2rem;
+    align-items: center;
+    gap: clamp(1rem, 3vw, 4rem);
+    flex-wrap: wrap;
   }
 
   .title {
-    font-size: 3rem;
-    font-weight: 700;
-    margin: 0;
+    font-size: clamp(3rem, 5vw, 5.5rem);
+    font-weight: 500;
+    margin-top: clamp(1rem, 4vw, 4rem);
   }
 
   .subtitle {
+    font-size: clamp(1rem, 2.5vw, 2rem);
     color: #e91e63;
     margin-top: 0.5rem;
+    margin-bottom: 60px;
+  }
+
+  .courseTitle {
+    font-size: clamp(1.2rem, 3vw, 3rem);
+    font-weight: 500;
+    margin-bottom: 30x;
   }
 
   .tabs {
     display: flex;
-    gap: 3rem;
+    flex-wrap: wrap;
+    gap: clamp(0.5rem, 2vw, 3rem);
   }
 
   .tab {
     background: none;
     border: none;
-    color: #999;
-    font-size: 1.6rem;
-    font-weight: 500;
+    color: #8a959b;
+    font-size: clamp(0.9rem, 2vw, 1rem);
+    font-weight: 400;
     cursor: pointer;
     position: relative;
-    padding-top: 0.5rem;
+    padding-top: clamp(0.4rem, 1vw, 1rem);
     transition: color 0.3s ease;
 
     &.active {
@@ -44,58 +54,60 @@
         content: "";
         position: absolute;
         top: 0;
-        left: 15%;
+        left: 23px;
         transform: translateX(-50%);
-        width: 40px;
-        height: 6px;
+        width: clamp(20px, 3vw, 60px);
+        height: clamp(2px, 0.5vw, 4px);
         background: #e91e63;
       }
     }
   }
 
-  .content {
-    margin-top: 2rem;
-    min-height: 12rem;
-    transition: opacity 0.4s ease;
-  }
-
   .list {
+    width: 60%;
     list-style: none;
     padding: 0;
-    margin: 0;
   }
 
   .item {
-    font-size: 1.4rem;
-    color: #ccc;
-    border-bottom: 1px solid #444;
-    padding: 0.8rem 0;
+    display: flex;
+    align-items: center;
+    gap: clamp(0.5rem, 2vw, 2rem);
+    font-family: "Roboto", sans-serif;
+    font-weight: 300;
+    font-size: clamp(0.85rem, 2vw, 1.2rem);
+    color: #8a959b;
+    border-bottom: 1px solid #8a959b;
+    padding: clamp(0.5rem, 1.5vw, 1.5rem) 0;
+
+    small {
+      font-family: "Montserrat", sans-serif;
+      font-weight: 400;
+      font-size: clamp(0.6rem, 1.5vw, 0.8rem);
+    }
   }
 
-  /* =====================
-     MOBILE / TABLET STYLE
-     ===================== */
   @media (max-width: 1024px) {
-    padding: 2rem 1.5rem;
-
-    .headerRow {
-      flex-direction: column;
-      align-items: flex-start;
+    .list {
+      width: 100%;
+      max-width: 1000px;
+      list-style: none;
+      padding: 0;
+      margin: 0 auto;
     }
 
     .tabs {
-      display: none; // esconde navegação em aba
+      display: none;
     }
 
     .accordion {
       display: flex;
       flex-direction: column;
-      gap: 1.5rem;
+      gap: clamp(0.8rem, 2vw, 2rem);
       width: 100%;
     }
 
     .accordionSection {
-      border-bottom: 1px solid #333;
       padding-bottom: 1rem;
 
       .accordionHeader {
@@ -103,26 +115,24 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        font-size: 1.2rem;
-        font-weight: 700;
+        font-size: clamp(1rem, 4vw, 2.5rem);
+        font-weight: 500;
         text-transform: uppercase;
         background: none;
         border: none;
         color: #fff;
         cursor: pointer;
-        padding: 0;
-        margin: 0;
       }
 
       .icon {
         display: flex;
-        align-items: center;
         justify-content: center;
-        width: 2.2rem;
-        height: 2.2rem;
+        align-items: center;
+        width: clamp(30px, 6vw, 60px);
+        height: clamp(30px, 6vw, 60px);
         border: 1px solid #e60050;
         border-radius: 50%;
-        font-size: 1.2rem;
+        font-size: clamp(1.2rem, 2vw, 1.6rem);
         font-weight: bold;
         color: #e60050;
         transition: all 0.3s ease;
@@ -133,23 +143,30 @@
         }
       }
 
-      .list {
-        margin-top: 1rem;
-        display: flex;
+      .item {
         flex-direction: column;
-        gap: 1rem;
-        padding-left: 0;
-        list-style: none;
+        align-items: flex-start;
+        font-size: clamp(0.8rem, 2vw, 1.2rem);
+        color: #fff;
+
+        span {
+          font-size: clamp(0.9rem, 2.5vw, 1.5rem);
+        }
+
+        small {
+          order: -1;
+          font-size: clamp(0.65rem, 2vw, 1rem);
+        }
       }
 
-      .item {
-        font-size: 0.9rem;
-        color: #ddd;
-        padding-bottom: 0.5rem;
-        border-bottom: 1px solid #333;
+      .panel {
+        overflow: hidden;
+        height: 0;
+        opacity: 0;
+        pointer-events: none;
 
-        &:last-child {
-          border-bottom: none;
+        &[data-open="true"] {
+          pointer-events: auto;
         }
       }
     }

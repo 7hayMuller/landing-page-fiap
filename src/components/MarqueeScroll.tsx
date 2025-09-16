@@ -11,12 +11,14 @@ type MarqueeScrollProps = {
   words: string[] | string;
   direction: "left" | "right";
   italic?: boolean;
+  repeatCount?: number;
 };
 
 export default function MarqueeScroll({
   words,
   direction,
   italic = false,
+  repeatCount = 4,
 }: MarqueeScrollProps) {
   const marqueeRef = useRef<HTMLDivElement>(null);
 
@@ -25,7 +27,7 @@ export default function MarqueeScroll({
     if (!el) return;
 
     const anim = gsap.to(el, {
-      xPercent: direction === "left" ? -50 : 50,
+      x: direction === "left" ? "-100vw" : "100vw",
       ease: "none",
       scrollTrigger: {
         trigger: el.parentElement,
@@ -42,12 +44,15 @@ export default function MarqueeScroll({
   }, [direction]);
 
   if (typeof words === "string") {
-    const renderPhrase = () => (
-      <div className={styles.group}>
-        <span className={styles.item}>{words}</span>
-        <span className={styles.dot}>•</span>
-      </div>
-    );
+    const repeated = Array.from({ length: repeatCount }, () => words);
+
+    const renderRepeated = () =>
+      repeated.map((word, i) => (
+        <span key={crypto.randomUUID()} className={styles.group}>
+          <span className={styles.item}>{word}</span>
+          {i < repeated.length && <span className={styles.dot}>•</span>}
+        </span>
+      ));
 
     return (
       <div className={styles.wrapper}>
@@ -57,8 +62,7 @@ export default function MarqueeScroll({
               italic ? styles.italic : ""
             }`}
           >
-            {renderPhrase()}
-            {renderPhrase()}
+            {renderRepeated()}
           </div>
         </div>
       </div>
@@ -67,22 +71,15 @@ export default function MarqueeScroll({
 
   const renderWords = () =>
     words.map((word, i) => (
-      <div key={typeof word === "string" ? word : i} className={styles.group}>
+      <span key={crypto.randomUUID()} className={styles.group}>
         <span className={styles.item}>{word}</span>
-        {i < words.length - 1 && <span className={styles.dot}>•</span>}
-      </div>
+        {i < words.length && <span className={styles.dot}> • </span>}
+      </span>
     ));
 
   return (
     <div className={styles.wrapper}>
       <div ref={marqueeRef} className={styles.track} aria-hidden>
-        <div
-          className={`${styles.chunk} ${styles.outlineText} ${
-            italic ? styles.italic : ""
-          }`}
-        >
-          {renderWords()}
-        </div>
         <div
           className={`${styles.chunk} ${styles.outlineText} ${
             italic ? styles.italic : ""

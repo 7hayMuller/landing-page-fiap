@@ -3,21 +3,31 @@
   white-space: nowrap;
   width: 100%;
   color: #fff;
-  font-size: clamp(2.1875rem, 5vw + 1rem, 5rem);
-  border-bottom: 2px solid #fff;
+  font-size: clamp(1.2rem, 4vw, 4rem); // escala bem entre mobile e desktop
+  border-bottom: clamp(1px, 0.3vw, 3px) solid #fff;
+  padding: clamp(0.5rem, 2vw, 1.5rem) 0;
 }
 
 .track {
-  display: inline-flex;
-  margin-top: 20px;
+  display: flex;
+  white-space: nowrap;
+  margin-top: clamp(0.5rem, 2vw, 1.5rem);
   will-change: transform;
 }
 
 .chunk {
+  display: inline-block;
+  width: 100%;
   flex: 0 0 auto;
-  padding-right: 2rem;
+  padding-right: clamp(0.5rem, 3vw, 2rem);
+}
+
+.block {
+  margin-left: clamp(0.5rem, 2vw, 1.5rem);
+  margin-right: clamp(0.5rem, 2vw, 1.5rem);
 }
 
 .item {
-  margin-right: 1rem;
+  display: inline-block;
+  margin-right: clamp(0.25rem, 1.5vw, 1rem);
 }

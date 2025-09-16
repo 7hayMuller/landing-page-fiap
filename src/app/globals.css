@@ -12,6 +12,7 @@
 
 html,
 body {
+  margin: 0 auto;
   max-width: 100vw;
   overflow-x: hidden;
 }
@@ -31,6 +32,18 @@ body {
   margin: 0;
 }
 
+.container {
+  padding: 6rem;
+
+  @media (max-width: 1024px) {
+    padding: 4rem;
+  }
+
+  @media (max-width: 768px) {
+    padding: 2rem;
+  }
+}
+
 a {
   color: inherit;
   text-decoration: none;
@@ -45,7 +58,7 @@ a {
 .desktopOnly {
   display: none;
 
-  @media (min-width: 768px) {
+  @media (min-width: 1025px) {
     display: block;
   }
 }

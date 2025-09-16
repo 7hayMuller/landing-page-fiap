@@ -4,55 +4,71 @@ import { gsap } from "gsap";
 import { useEffect, useRef } from "react";
 import styles from "./Marquee.module.scss";
 
-export default function Marquee({ text }: { text: string }) {
-  const marqueeRef = useRef<HTMLDivElement>(null);
+type MarqueeProps = {
+  text: string;
+  direction?: "left" | "right";
+  speed?: number;
+};
+
+export default function Marquee({
+  text,
+  direction = "left",
+  speed = 50,
+}: MarqueeProps) {
+  const trackRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const el = marqueeRef.current;
-    if (!el) return;
+    const track = trackRef.current;
+    if (!track) return;
 
     const init = () => {
-      const totalWidth = el.scrollWidth / 2;
-      gsap.set(el, { x: 0 });
-      gsap.to(el, {
-        x: `-=${totalWidth}`,
-        duration: 20,
+      const contentWidth = track.scrollWidth / 2;
+      if (!contentWidth) return;
+
+      const duration = contentWidth / speed;
+
+      gsap.killTweensOf(track);
+      gsap.set(track, { x: 0 });
+
+      const wrapX = gsap.utils.wrap(-contentWidth, 0);
+
+      gsap.to(track, {
+        x: direction === "left" ? -contentWidth : contentWidth,
+        duration,
         ease: "none",
         repeat: -1,
         modifiers: {
-          x: gsap.utils.unitize((x) => {
-            const v = parseFloat(x) % totalWidth;
-            return v;
-          }),
+          x: (x) => `${wrapX(parseFloat(x))}px`,
         },
       });
     };
 
-    if (document.fonts?.ready) {
-      document.fonts.ready.then(init);
+    const doc = document as Document & { fonts?: FontFaceSet };
+    if (doc.fonts?.ready) {
+      doc.fonts.ready.then(init);
     } else {
       requestAnimationFrame(init);
     }
 
-    const onResize = () => {
-      gsap.killTweensOf(el);
-      init();
-    };
-    window.addEventListener("resize", onResize);
+    window.addEventListener("resize", init);
     return () => {
-      window.removeEventListener("resize", onResize);
-      gsap.killTweensOf(el);
+      window.removeEventListener("resize", init);
+      gsap.killTweensOf(track);
     };
-  }, []);
+  }, [direction, speed]);
+
+  const repeated = Array.from({ length: 50 }, (_) => (
+    <div key={crypto.randomUUID()} className={styles.block}>
+      <span>{text}</span>
+    </div>
+  ));
 
   return (
     <div className={styles.wrapper}>
-      <div ref={marqueeRef} className={styles.track} aria-hidden>
-        <div className={styles.chunk}>
-          <span className={`${styles.item} ${styles.outlineText}`}>{text}</span>
-        </div>
-        <div className={styles.chunk}>
-          <span className={`${styles.item} ${styles.outlineText}`}>{text}</span>
+      <div className={styles.marquee}>
+        <div ref={trackRef} className={styles.track}>
+          {repeated}
+          {repeated}
         </div>
       </div>
     </div>

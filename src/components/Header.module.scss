@@ -10,6 +10,17 @@
   transition: background 240ms ease, color 240ms ease, box-shadow 240ms ease;
 }
 
+.logoWrapper {
+  position: relative;
+  width: clamp(80px, 15vw, 100px);
+  height: auto;
+  aspect-ratio: 144 / 40;
+}
+
+.logo {
+  object-fit: contain;
+}
+
 .scrolled {
   background: #202121;
   color: #111;
