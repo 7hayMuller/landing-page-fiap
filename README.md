@@ -59,4 +59,4 @@ Formata o código automaticamente com o **Biome**.
 
 ![Landing Page FIAP Mobile](./public/imgs/Mobile.jpeg)
 ![Landing Page FIAP Tablet](./public/imgs/Tablet.jpeg)
-![Landing Page FIAP Desktop](./public/imgs/Desktop.jpeg)
+![Landing Page FIAP Desktop](./public/imgs/Desktop.png)
