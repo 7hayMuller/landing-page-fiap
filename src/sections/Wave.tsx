@@ -1,3 +1,4 @@
+// Wave.tsx
 "use client";
 
 import { gsap } from "gsap";
@@ -17,7 +18,6 @@ export default function Wave() {
   const images = useRef<HTMLImageElement[]>([]);
   const context = useRef<CanvasRenderingContext2D | null>(null);
   const [isDesktop, setIsDesktop] = useState(false);
-  const aspectRef = useRef<number>(9 / 16);
 
   const render = useCallback((index: number) => {
     const canvas = canvasRef.current;
@@ -31,22 +31,40 @@ export default function Wave() {
     const cssH = canvas.clientHeight;
 
     ctx.clearRect(0, 0, cssW, cssH);
-
     ctx.drawImage(img, 0, 0, cssW, cssH);
   }, []);
 
   useEffect(() => {
-    const checkDesktop = () => setIsDesktop(window.innerWidth >= 1024);
-    checkDesktop();
-    window.addEventListener("resize", checkDesktop);
-    return () => window.removeEventListener("resize", checkDesktop);
+    const onResizeMQ = () => setIsDesktop(window.innerWidth >= 1024);
+    onResizeMQ();
+    window.addEventListener("resize", onResizeMQ);
+    return () => window.removeEventListener("resize", onResizeMQ);
   }, []);
 
   useEffect(() => {
     if (!isDesktop) return;
-
     const canvas = canvasRef.current;
     if (!canvas) return;
+
+    const resizeCanvas = () => {
+      const dpr = window.devicePixelRatio || 1;
+      const cssWidth = window.innerWidth;
+      const cssHeight = window.innerHeight; // ocupa 100vh
+
+      canvas.style.width = `${cssWidth}px`;
+      canvas.style.height = `${cssHeight}px`;
+
+      canvas.width = Math.floor(cssWidth * dpr);
+      canvas.height = Math.floor(cssHeight * dpr);
+
+      const ctx = canvas.getContext("2d");
+      if (!ctx) return;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      context.current = ctx;
+
+      render(0);
+      ScrollTrigger.refresh();
+    };
 
     const loadFrames = () => {
       const loaded: HTMLImageElement[] = [];
@@ -58,43 +76,21 @@ export default function Wave() {
       images.current = loaded;
 
       loaded[0].onload = () => {
-        aspectRef.current = loaded[0].height / loaded[0].width;
         resizeCanvas();
         render(0);
+        setupScroll();
       };
     };
 
-    const resizeCanvas = () => {
-      const dpr = window.devicePixelRatio || 1;
-      const cssWidth = window.innerWidth;
-      const cssHeight = Math.round(cssWidth * aspectRef.current);
-
-      canvas.style.width = `${cssWidth}px`;
-      canvas.style.height = `${cssHeight}px`;
-
-      canvas.width = Math.floor(cssWidth * dpr);
-      canvas.height = Math.floor(cssHeight * dpr);
-
-      const ctx = canvas.getContext("2d");
-      if (!ctx) return;
-
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      context.current = ctx;
-
-      render(0);
-    };
-
-    loadFrames();
-
-    const mm = gsap.matchMedia();
-    mm.add("(min-width: 1025px)", () => {
-      const scrollDistance = frameCount * 5;
-      const st = ScrollTrigger.create({
+    let st: ScrollTrigger | null = null;
+    const setupScroll = () => {
+      st?.kill();
+      const scrollDistance = frameCount * 2;
+      st = ScrollTrigger.create({
         trigger: "#section-3",
         start: "top top",
         end: `+=${scrollDistance}`,
         scrub: true,
-        pin: true,
         onUpdate: (self) => {
           const frameIndex = Math.min(
             frameCount - 1,
@@ -102,16 +98,15 @@ export default function Wave() {
           );
           requestAnimationFrame(() => render(frameIndex));
         },
-
-        onRefresh: () => render(0),
       });
-      return () => st.kill();
-    });
+    };
 
+    loadFrames();
     window.addEventListener("resize", resizeCanvas);
+
     return () => {
       window.removeEventListener("resize", resizeCanvas);
-      mm.kill();
+      st?.kill();
     };
   }, [isDesktop, render]);
 
@@ -122,10 +117,8 @@ export default function Wave() {
       ref={canvasRef}
       style={{
         display: "block",
-        width: "100vw",
-        height: "auto",
-        marginTop: -20,
-        marginBottom: "8vh",
+        width: "100%",
+        height: "100%",
       }}
     />
   );

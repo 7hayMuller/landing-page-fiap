@@ -57,6 +57,6 @@ Formata o código automaticamente com o **Biome**.
 
 ## 🖼️ Preview
 
-![Landing Page FIAP Galaxy S8](./public/imgs/GalaxyS8.jpeg)
-![Landing Page FIAP IPad](./public/imgs/Ipad.jpeg)
-![Landing Page FIAP MacBook Pro](./public/imgs/MacBookPro.jpeg)
+![Landing Page FIAP Mobile](./public/imgs/Mobile.jpeg)
+![Landing Page FIAP Tablet](./public/imgs/Tablet.jpeg)
+![Landing Page FIAP Desktop](./public/imgs/Desktop.jpeg)

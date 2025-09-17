@@ -55,7 +55,7 @@ export default function Home() {
       <div className="desktopOnly">
         <section
           id="section-3"
-          style={{ margin: 0, padding: 0, width: "100vw" }}
+          style={{ margin: 0, padding: 0, width: "100vw", height: "100vh" }}
         >
           <Wave />
         </section>
