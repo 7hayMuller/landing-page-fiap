@@ -30,7 +30,13 @@ export default function Home() {
               alt="imagem de estudantes"
               width={1495}
               height={804}
-              style={{ marginTop: "50px" }}
+              style={{
+                maxWidth: 1495,
+                width: "100%",
+                paddingInline: 100,
+                height: "auto",
+                marginTop: "50px",
+              }}
             />
           </div>
           <div style={{ zIndex: 1, marginTop: "-100px" }}>

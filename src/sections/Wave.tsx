@@ -118,6 +118,7 @@ export default function Wave() {
     <canvas
       ref={canvasRef}
       style={{
+        marginTop: -20,
         display: "block",
         width: "100vw",
         height: "auto",
