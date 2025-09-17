@@ -61,3 +61,4 @@ Formata o código automaticamente com o **Biome**.
 ![Landing Page FIAP Galaxy S8](./public/imgs/GalaxyS8.jpeg)
 ![Landing Page FIAP IPad Mini](./public/imgs/Ipad-mini.jpeg)
 ![Landing Page FIAP MacBook Pro](./public/imgs/MacBookPro.jpeg)
+.
