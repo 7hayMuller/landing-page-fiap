@@ -1,11 +1,11 @@
 import Image from "next/image";
-import Courses from "@/components/Courses";
-import Faq from "@/components/Faq";
 import Header from "@/components/Header";
-import HeroText from "@/components/HeroText";
 import Marquee from "@/components/Marquee";
 import MarqueeScroll from "@/components/MarqueeScroll";
-import Wave from "@/components/Wave";
+import Courses from "@/sections/Courses";
+import Faq from "@/sections/Faq";
+import HeroText from "@/sections/HeroText";
+import Wave from "@/sections/Wave";
 
 export default function Home() {
   return (
@@ -36,26 +36,12 @@ export default function Home() {
           <div style={{ zIndex: 1, marginTop: "-100px" }}>
             <MarqueeScroll
               direction="left"
-              words={[
-                "CONHECIMENTO",
-                "SKILLS",
-                "CONHECIMENTO",
-                "SKILLS",
-                "CONHECIMENTO",
-                "SKILLS",
-              ]}
+              words={["CONHECIMENTO", "SKILLS"]}
             />
             <MarqueeScroll
               direction="right"
               italic
-              words={[
-                "MUITO ALÉM DOS TUTORIAIS",
-                "MUITO ALÉM DOS TUTORIAIS",
-                "MUITO ALÉM DOS TUTORIAIS",
-                "MUITO ALÉM DOS TUTORIAIS",
-                "MUITO ALÉM DOS TUTORIAIS",
-                "MUITO ALÉM DOS TUTORIAIS",
-              ]}
+              words={["MUITO ALÉM DOS TUTORIAIS"]}
             />
           </div>
         </div>

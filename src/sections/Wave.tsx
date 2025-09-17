@@ -76,7 +76,7 @@ export default function Wave() {
 
     const mm = gsap.matchMedia();
     mm.add("(min-width: 1025px)", () => {
-      const scrollDistance = frameCount * 8;
+      const scrollDistance = frameCount * 5;
 
       const st = ScrollTrigger.create({
         trigger: "#section-3",

@@ -53,3 +53,11 @@ Formata o código automaticamente com o **Biome**.
 - [Sass](https://sass-lang.com/) – estilização
 - [Biome](https://biomejs.dev/) – lint/format
 - [TypeScript](https://www.typescriptlang.org/)
+- [React Icons](https://react-icons.github.io/react-icons/) - icones
+
+## 🖼️ Preview
+
+![Landing Page FIAP Iphone 5](/imgs/Iphone5.jpeg)
+![Landing Page FIAP Galaxy S8](/imgs/GalaxyS8.jpeg)
+![Landing Page FIAP IPad Mini](/imgs/Ipad-mini.jpeg)
+![Landing Page FIAP MacBook Pro](/imgs/MacBookPro.jpeg)

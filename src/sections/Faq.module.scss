@@ -27,6 +27,7 @@
 
 .grid {
   display: grid;
+  justify-content: center;
   grid-template-columns: repeat(3, 1fr);
   gap: clamp(1rem, 3vw, 2.5rem);
   width: 100%;

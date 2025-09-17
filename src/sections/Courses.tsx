@@ -29,30 +29,38 @@ const COURSES: Record<TabKey, ReactNode[]> = {
   ],
   inovacao: [
     <>
-      <span>Design Thinking</span>
+      <span>UX</span>
       <small>REMOTO • LIVE</small>
     </>,
     <>
-      <span>Prototipagem Rápida</span>
-      <small>REMOTO • LIVE</small>
+      <span>UX Writing</span>
+      <small>REMOTO</small>
     </>,
     <>
-      <span>Criatividade Aplicada</span>
-      <small>REMOTO • LIVE</small>
+      <span>Chatbots</span>
+      <small>REMOTO • LIVE + MULTIMÍDIA</small>
     </>,
   ],
   negocios: [
     <>
-      <span>Gestão Ágil</span>
+      <span>Agile Culture</span>
+      <small>LIVE</small>
+    </>,
+    <>
+      <span>DPO Data Protection Officer</span>
       <small>REMOTO • LIVE</small>
     </>,
     <>
-      <span>Liderança Estratégica</span>
+      <span>IT Business Partner</span>
       <small>REMOTO • LIVE + MULTIMÍDIA</small>
     </>,
     <>
-      <span>Finanças Corporativas</span>
-      <small>REMOTO • LIVE</small>
+      <span>Perícia Forense Computacional</span>
+      <small>REMOTO • LIVE + MULTIMÍDIA</small>
+    </>,
+    <>
+      <span>Growth Hacking</span>
+      <small>REMOTO</small>
     </>,
   ],
 };
@@ -74,8 +82,9 @@ export function useMediaQuery(query: string) {
 
 export default function CoursesSection() {
   const [activeTab, setActiveTab] = useState<TabKey>("tecnologia");
+
   const [openSections, setOpenSections] = useState<Record<TabKey, boolean>>({
-    tecnologia: true,
+    tecnologia: false,
     inovacao: false,
     negocios: false,
   });
@@ -99,19 +108,23 @@ export default function CoursesSection() {
     negocios: null,
   });
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: This should run only once on mount
   useEffect(() => {
-    (Object.keys(openSections) as TabKey[]).forEach((tab) => {
+    (Object.keys(panelRefs.current) as TabKey[]).forEach((tab) => {
       const el = panelRefs.current[tab];
       if (!el) return;
+
       if (openSections[tab]) {
         el.style.height = "auto";
         el.style.opacity = "1";
+        el.style.overflow = "visible";
       } else {
         el.style.height = "0";
         el.style.opacity = "0";
+        el.style.overflow = "hidden";
       }
     });
-  }, [openSections]);
+  }, []);
 
   const animatePanel = (tab: TabKey, opening: boolean) => {
     const el = panelRefs.current[tab];
@@ -123,14 +136,15 @@ export default function CoursesSection() {
       const h = el.scrollHeight || 0;
       gsap.fromTo(
         el,
-        { height: 0, opacity: 0 },
+        { height: 0, autoAlpha: 0, overflow: "hidden" },
         {
           height: h,
-          opacity: 1,
-          duration: 0.35,
-          ease: "power2.out",
+          autoAlpha: 1,
+          duration: 0.55,
+          ease: "power3.out",
           onComplete: () => {
             el.style.height = "auto";
+            el.style.overflow = "visible";
           },
         }
       );
@@ -138,8 +152,13 @@ export default function CoursesSection() {
       const h = el.scrollHeight || 0;
       gsap.fromTo(
         el,
-        { height: h, opacity: 1 },
-        { height: 0, opacity: 0, duration: 0.25, ease: "power2.in" }
+        { height: h, autoAlpha: 1, overflow: "hidden" },
+        {
+          height: 0,
+          autoAlpha: 0,
+          duration: 0.45,
+          ease: "power3.inOut",
+        }
       );
     }
   };

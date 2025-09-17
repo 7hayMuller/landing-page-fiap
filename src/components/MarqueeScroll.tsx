@@ -11,14 +11,12 @@ type MarqueeScrollProps = {
   words: string[] | string;
   direction: "left" | "right";
   italic?: boolean;
-  repeatCount?: number;
 };
 
 export default function MarqueeScroll({
   words,
   direction,
   italic = false,
-  repeatCount = 4,
 }: MarqueeScrollProps) {
   const marqueeRef = useRef<HTMLDivElement>(null);
 
@@ -43,37 +41,13 @@ export default function MarqueeScroll({
     };
   }, [direction]);
 
-  if (typeof words === "string") {
-    const repeated = Array.from({ length: repeatCount }, () => words);
-
-    const renderRepeated = () =>
-      repeated.map((word, i) => (
-        <span key={crypto.randomUUID()} className={styles.group}>
-          <span className={styles.item}>{word}</span>
-          {i < repeated.length && <span className={styles.dot}>•</span>}
-        </span>
-      ));
-
-    return (
-      <div className={styles.wrapper}>
-        <div ref={marqueeRef} className={styles.track} aria-hidden>
-          <div
-            className={`${styles.chunk} ${styles.outlineText} ${
-              italic ? styles.italic : ""
-            }`}
-          >
-            {renderRepeated()}
-          </div>
-        </div>
-      </div>
-    );
-  }
+  const repeated = Array.from({ length: 10 }, () => words).flat();
 
   const renderWords = () =>
-    words.map((word, i) => (
+    repeated.map((word, i) => (
       <span key={crypto.randomUUID()} className={styles.group}>
         <span className={styles.item}>{word}</span>
-        {i < words.length && <span className={styles.dot}> • </span>}
+        {i < repeated.length - 1 && <span className={styles.dot}> • </span>}
       </span>
     ));
 

@@ -28,10 +28,10 @@
 
 .front {
   position: absolute;
-  top: clamp(10px, 2vw, 50px);
+  top: clamp(10px, 1vw, 50px);
   left: clamp(10px, 2vw, 50px);
-  right: clamp(10px, 2vw, 50px);
-  bottom: clamp(20px, 3vw, 80px);
+  right: clamp(10px, 1vw, 50px);
+  bottom: clamp(20px, 5vw, 80px);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
