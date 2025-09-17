@@ -17,6 +17,7 @@ export default function Wave() {
   const images = useRef<HTMLImageElement[]>([]);
   const context = useRef<CanvasRenderingContext2D | null>(null);
   const [isDesktop, setIsDesktop] = useState(false);
+  const aspectRef = useRef<number>(9 / 16);
 
   const render = useCallback((index: number) => {
     const canvas = canvasRef.current;
@@ -26,20 +27,12 @@ export default function Wave() {
     const img = images.current[index];
     if (!img) return;
 
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    const cssW = canvas.clientWidth;
+    const cssH = canvas.clientHeight;
 
-    const scale = Math.min(
-      canvas.width / img.width,
-      canvas.height / img.height
-    );
+    ctx.clearRect(0, 0, cssW, cssH);
 
-    const newWidth = img.width * scale;
-    const newHeight = img.height * scale;
-
-    const x = (canvas.width - newWidth) / 2;
-    const y = (canvas.height - newHeight) / 2;
-
-    ctx.drawImage(img, x, y, newWidth, newHeight);
+    ctx.drawImage(img, 0, 0, cssW, cssH);
   }, []);
 
   useEffect(() => {
@@ -55,29 +48,47 @@ export default function Wave() {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    const ctx = canvas.getContext("2d");
-    context.current = ctx;
+    const loadFrames = () => {
+      const loaded: HTMLImageElement[] = [];
+      for (let i = 0; i < frameCount; i++) {
+        const img = new Image();
+        img.src = currentFrame(i);
+        loaded.push(img);
+      }
+      images.current = loaded;
 
-    const loadedImages: HTMLImageElement[] = [];
-    for (let i = 0; i < frameCount; i++) {
-      const img = new Image();
-      img.src = currentFrame(i);
-      loadedImages.push(img);
-    }
-    images.current = loadedImages;
+      loaded[0].onload = () => {
+        aspectRef.current = loaded[0].height / loaded[0].width;
+        resizeCanvas();
+        render(0);
+      };
+    };
 
-    loadedImages[0].onload = () => {
-      const aspectRatio = loadedImages[0].height / loadedImages[0].width;
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerWidth * aspectRatio;
+    const resizeCanvas = () => {
+      const dpr = window.devicePixelRatio || 1;
+      const cssWidth = window.innerWidth;
+      const cssHeight = Math.round(cssWidth * aspectRef.current);
+
+      canvas.style.width = `${cssWidth}px`;
+      canvas.style.height = `${cssHeight}px`;
+
+      canvas.width = Math.floor(cssWidth * dpr);
+      canvas.height = Math.floor(cssHeight * dpr);
+
+      const ctx = canvas.getContext("2d");
+      if (!ctx) return;
+
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      context.current = ctx;
 
       render(0);
     };
 
+    loadFrames();
+
     const mm = gsap.matchMedia();
     mm.add("(min-width: 1025px)", () => {
       const scrollDistance = frameCount * 5;
-
       const st = ScrollTrigger.create({
         trigger: "#section-3",
         start: "top top",
@@ -91,23 +102,15 @@ export default function Wave() {
           );
           requestAnimationFrame(() => render(frameIndex));
         },
-      });
 
+        onRefresh: () => render(0),
+      });
       return () => st.kill();
     });
 
-    const handleResize = () => {
-      if (images.current[0]) {
-        const aspectRatio = images.current[0].height / images.current[0].width;
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerWidth * aspectRatio;
-        render(0);
-      }
-    };
-    window.addEventListener("resize", handleResize);
-
+    window.addEventListener("resize", resizeCanvas);
     return () => {
-      window.removeEventListener("resize", handleResize);
+      window.removeEventListener("resize", resizeCanvas);
       mm.kill();
     };
   }, [isDesktop, render]);
@@ -118,10 +121,11 @@ export default function Wave() {
     <canvas
       ref={canvasRef}
       style={{
-        marginTop: -20,
         display: "block",
         width: "100vw",
         height: "auto",
+        marginTop: -20,
+        marginBottom: "8vh",
       }}
     />
   );

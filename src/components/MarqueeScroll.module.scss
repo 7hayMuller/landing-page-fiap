@@ -22,7 +22,7 @@
 
 .item {
   white-space: nowrap;
-  font-size: 6rem;
+  font-size: clamp(1.2rem, 6vw, 8rem);
   font-weight: 700;
 }
 

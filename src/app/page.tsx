@@ -31,7 +31,7 @@ export default function Home() {
               width={1495}
               height={804}
               style={{
-                maxWidth: 1495,
+                maxWidth: 1900,
                 width: "100%",
                 paddingInline: 100,
                 height: "auto",
