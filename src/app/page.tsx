@@ -1,5 +1,8 @@
 "use client";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Image from "next/image";
+import { useEffect, useRef } from "react";
 import Header from "@/components/Header";
 import Marquee from "@/components/Marquee";
 import MarqueeScroll from "@/components/MarqueeScroll";
@@ -7,9 +10,6 @@ import Courses from "@/sections/Courses";
 import Faq from "@/sections/Faq";
 import HeroText from "@/sections/HeroText";
 import Wave from "@/sections/Wave";
-import gsap from "gsap";
-import { useEffect, useRef } from "react";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 

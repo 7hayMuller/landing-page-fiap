@@ -26,18 +26,19 @@
   }
 
   @media (min-width: 768px) and (max-width: 1024px) {
-    font-size: 5rem;
+    font-size: 4rem;
   }
 }
 
 .subtitle {
   font-size: clamp(0.9rem, 2vw, 1.1rem);
-  color: #e91e63;
-  margin-top: 0.5rem;
+  font-weight: 500;
+  color: #ed145b;
   margin-bottom: 60px;
 
   @media (min-width: 2000px) {
     font-size: 2rem;
+    margin-bottom: 80px;
   }
 
   @media (max-width: 480px) {
@@ -45,7 +46,7 @@
   }
 
   @media (min-width: 768px) and (max-width: 1024px) {
-    font-size: 2rem;
+    font-size: 1.5rem;
   }
 }
 

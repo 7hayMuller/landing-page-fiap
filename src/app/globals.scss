@@ -36,10 +36,10 @@ body {
   max-width: 2000px;
   width: 100%;
   margin: 0 auto;
-  padding: 6rem;
+  padding: 4rem;
 
-  @media (max-width: 1024px) {
-    padding: 4rem;
+  @media (min-width: 2000px) {
+    padding: 6rem;
   }
 
   @media (max-width: 768px) {
