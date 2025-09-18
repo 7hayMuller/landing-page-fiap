@@ -1,4 +1,4 @@
-import "./globals.css";
+import "./globals.scss";
 import { Montserrat, Roboto } from "next/font/google";
 
 const roboto = Roboto({
