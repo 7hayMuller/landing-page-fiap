@@ -1,3 +1,4 @@
+"use client";
 import Image from "next/image";
 import Header from "@/components/Header";
 import Marquee from "@/components/Marquee";
@@ -6,8 +7,34 @@ import Courses from "@/sections/Courses";
 import Faq from "@/sections/Faq";
 import HeroText from "@/sections/HeroText";
 import Wave from "@/sections/Wave";
+import gsap from "gsap";
+import { useEffect, useRef } from "react";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 export default function Home() {
+  const studentImgRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (studentImgRef.current) {
+      gsap.fromTo(
+        studentImgRef.current,
+        { y: -100, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 2,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: studentImgRef.current,
+            start: "top 80%",
+            toggleActions: "play none none reverse",
+          },
+        }
+      );
+    }
+  }, []);
   return (
     <>
       <Header />
@@ -24,7 +51,10 @@ export default function Home() {
           text="TECNOLOGIA, INOVAÇÃO E NEGÓCIOS. PRESENTE E FUTURO."
         />
         <div className="desktopOnly">
-          <div style={{ display: "flex", justifyContent: "center" }}>
+          <div
+            ref={studentImgRef}
+            style={{ display: "flex", justifyContent: "center" }}
+          >
             <Image
               src="/imgs/imagem.png"
               alt="imagem de estudantes"

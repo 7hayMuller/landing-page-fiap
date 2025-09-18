@@ -85,11 +85,12 @@ export default function Wave() {
     let st: ScrollTrigger | null = null;
     const setupScroll = () => {
       st?.kill();
-      const scrollDistance = frameCount * 2;
+      const scrollDistance = frameCount * 5;
       st = ScrollTrigger.create({
         trigger: "#section-3",
         start: "top top",
         end: `+=${scrollDistance}`,
+        pin: true,
         scrub: true,
         onUpdate: (self) => {
           const frameIndex = Math.min(
@@ -118,7 +119,7 @@ export default function Wave() {
       style={{
         display: "block",
         width: "100%",
-        height: "100%",
+        height: "100vh",
       }}
     />
   );

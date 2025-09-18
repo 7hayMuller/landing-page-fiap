@@ -93,14 +93,26 @@ export default function CoursesSection() {
   const isMobileOrTablet = useMediaQuery("(max-width: 1024px)");
 
   useEffect(() => {
-    if (contentRef.current && !isMobileOrTablet) {
+    if (!contentRef.current || isMobileOrTablet) return;
+
+    const ctx = gsap.context(() => {
       gsap.fromTo(
         contentRef.current,
-        { autoAlpha: 0, y: 15 },
-        { autoAlpha: 1, y: 0, duration: 0.6, ease: "power2.out" }
+        {
+          autoAlpha: 0,
+          clipPath: "inset(0% 0% 100% 0%)",
+        },
+        {
+          autoAlpha: 1,
+          clipPath: "inset(0% 0% 0% 0%)",
+          duration: 0.6,
+          ease: "power3.out",
+        }
       );
-    }
-  }, [isMobileOrTablet]);
+    }, contentRef);
+
+    return () => ctx.revert();
+  }, [activeTab, isMobileOrTablet]);
 
   const panelRefs = useRef<Record<TabKey, HTMLUListElement | null>>({
     tecnologia: null,
@@ -211,7 +223,7 @@ export default function CoursesSection() {
               ? "Negócios"
               : "Tecnologia"}
           </h2>
-          <ul className={styles.list}>
+          <ul key={activeTab} className={styles.list}>
             {COURSES[activeTab].map((course) => (
               <li key={crypto.randomUUID()} className={styles.item}>
                 {course}

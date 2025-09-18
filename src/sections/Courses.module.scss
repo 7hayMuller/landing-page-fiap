@@ -12,9 +12,13 @@
   }
 
   .title {
-    font-size: clamp(2rem, 6vw, 5rem);
+    font-size: clamp(2rem, 6vw, 4rem);
     font-weight: 500;
     margin-top: clamp(1rem, 4vw, 4rem);
+
+    @media (min-width: 2000px) {
+      font-size: 6rem;
+    }
 
     @media (max-width: 480px) {
       font-size: 2.8rem;
@@ -26,10 +30,14 @@
   }
 
   .subtitle {
-    font-size: clamp(0.9rem, 2vw, 1.6rem);
+    font-size: clamp(0.9rem, 2vw, 1.1rem);
     color: #e91e63;
     margin-top: 0.5rem;
     margin-bottom: 60px;
+
+    @media (min-width: 2000px) {
+      font-size: 2rem;
+    }
 
     @media (max-width: 480px) {
       font-size: 1rem;
@@ -41,8 +49,12 @@
   }
 
   .courseTitle {
-    font-size: clamp(1.2rem, 3vw, 3rem);
+    font-size: clamp(1.2rem, 3vw, 2.5rem);
     font-weight: 500;
+
+    @media (min-width: 2000px) {
+      font-size: 3rem;
+    }
   }
 
   .tabs {
@@ -56,25 +68,34 @@
     border: none;
     color: #8a959b;
     font-family: "Montserrat", sans-serif;
-    font-size: clamp(0.9rem, 2vw, 1.5rem);
+    font-size: clamp(0.9rem, 2vw, 1rem);
     font-weight: 400;
     cursor: pointer;
     position: relative;
     padding-top: clamp(0.4rem, 1vw, 1rem);
     transition: color 0.3s ease;
 
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 0;
+      height: clamp(2px, 0.5vw, 4px);
+      background: #e91e63;
+      transition: width 0.6s ease;
+    }
+
     &.active {
       color: #fff;
 
       &::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
         width: clamp(20px, 3vw, 60px);
-        height: clamp(2px, 0.5vw, 4px);
-        background: #e91e63;
       }
+    }
+
+    @media (min-width: 2000px) {
+      font-size: 1.5rem;
     }
   }
 
@@ -82,7 +103,7 @@
     width: 60%;
     list-style: none;
     padding: 0;
-    margin-top: 60px;
+    margin-top: 30px;
   }
 
   .item {
@@ -91,16 +112,35 @@
     gap: clamp(0.5rem, 2vw, 2rem);
     font-family: "Roboto", sans-serif;
     font-weight: 300;
-    font-size: clamp(0.85rem, 2vw, 1.8rem);
+    font-size: clamp(0.85rem, 2vw, 1.2rem);
     color: #8a959b;
     border-bottom: 1px solid #8a959b;
     padding: clamp(0.5rem, 1.5vw, 1.5rem) 0;
+    transition: all 0.3s ease;
 
     small {
       font-family: "Montserrat", sans-serif;
       font-weight: 400;
-      font-size: clamp(0.6rem, 1.5vw, 1rem);
+      font-size: clamp(0.6rem, 1.5vw, 0.6rem);
       color: #8a959b;
+      transition: color 0.3s ease;
+
+      @media (min-width: 2000px) {
+        font-size: 1rem;
+      }
+    }
+
+    &:hover {
+      color: #e91e63;
+      border-bottom-color: #e91e63;
+
+      small {
+        color: #e91e63;
+      }
+    }
+
+    @media (min-width: 2000px) {
+      font-size: 2rem;
     }
   }
 
